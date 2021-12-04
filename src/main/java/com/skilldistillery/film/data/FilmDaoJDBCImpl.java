@@ -9,9 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+	@Repository
 	public class FilmDaoJDBCImpl implements FilmDAO {
 	//connection object goes here
 		private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
@@ -20,7 +23,7 @@ import com.skilldistillery.film.entities.Film;
 
 		static {
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
