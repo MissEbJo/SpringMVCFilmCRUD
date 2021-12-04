@@ -285,8 +285,8 @@ import com.skilldistillery.film.entities.Film;
 			try {
 				conn = DriverManager.getConnection(URL, USER, PASS);
 				conn.setAutoCommit(false); //Start Transaction
-				String sql = "INSERT INTO film (title, description, language_id) "
-						+ "VALUES (?, ?, ?)";
+				String sql = "INSERT INTO film (title, description, language_id, release_year) "
+						+ "VALUES (?, ?, ?, ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				
 //				System.out.println(stmt + "*******");
