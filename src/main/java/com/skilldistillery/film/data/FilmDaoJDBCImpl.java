@@ -310,9 +310,9 @@ import com.skilldistillery.film.entities.Film;
 				stmt.setString(1, newFilm.getTitle());
 				
 				stmt.setString(2, newFilm.getDescription());
-				stmt.setString(3, newFilm.getLanguage());
+				stmt.setInt(3, newFilm.getLanguageId());
 				stmt.setString(4, newFilm.getReleaseYear());
-				stmt.setString(5, sql);
+				stmt.setString(5, newFilm.getRating());
 				
 //				System.out.println(stmt + "*******");
 				

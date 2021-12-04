@@ -38,9 +38,16 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path="NewFilmData.do", method= RequestMethod.POST)
-		public ModelAndView createNewFilm(Film newFilm){
+		public ModelAndView createNewFilm(String title, String description, Integer languageId, String rating, String releaseYear){
 		ModelAndView mv = new ModelAndView();
-		Film film = filmDao.createFilm(newFilm);
+		Film film = new Film();
+		film.setTitle(title);
+		film.setDescription(description);
+		film.setRating(rating);
+		film.setLanguageId(languageId);
+		film.setReleaseYear(releaseYear);
+		System.out.println(film);
+		filmDao.createFilm(film);
 		mv.addObject("film", film);
 		mv.setViewName("result");
 		
