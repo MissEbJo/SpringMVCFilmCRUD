@@ -18,8 +18,10 @@ import com.skilldistillery.film.entities.Film;
 	public class FilmDaoJDBCImpl implements FilmDAO {
 	//connection object goes here
 		private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
-		private static final String USER = "root";
-		private static final String PASS = "root";
+		private final String USER = "student";
+		private final String PASS = "student";
+		
+//		private final String fullDataQuery = ""
 
 		static {
 			try {
@@ -307,10 +309,7 @@ import com.skilldistillery.film.entities.Film;
 					if(keys.next()) {
 						int newFilmId =keys.getInt(1);
 						newFilm.setId(newFilmId);
-//						String sql2 ="INSERT INTO (film_actor) VALUES (?)";
-//						stmt = conn.prepareStatement(sql2);
-//						stmt.setInt(1, newFilm.getId());
-//						updateCount = stmt.executeUpdate();
+//						
 					}
 				}else {
 					newFilm =null;

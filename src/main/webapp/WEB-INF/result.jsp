@@ -6,28 +6,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>States</title>
+<title>Films</title>
 </head>
 <body>
   <c:choose>
-    <c:when test="${! empty state}">
+    <c:when test="${! empty film}">
       <ul>
-        <li>${state.abbreviation}</li>
-        <li>${state.name}</li>
-        <li>${state.capital}</li>
-        <li>${state.capitalPopulation}</li>
+        <li>${film.id}</li>
+        <li>${film.title}</li>
+        <li>${film.description}</li>
+        <li>${film.releaseYear}</li>
+        <li>${film.languageId}</li>
+        <li>${film.rentalDuration}</li>
+        <li>${film.rentalRate}</li>
+        <li>${film.length}</li>
+        <li>${film.replacementCost}</li>
+        <li>${film.rating}</li>
+        <li>${film.specialFeatures}</li>
+        <li>${film.actors}</li>
       </ul>
-      <form action="NextState.do">
+     <!--  <form action="NextState.do">
       <button type="submit">Next</button>
       </form>
       <form action="PrevState.do">
       <button type="submit">Prev</button>
-      </form>
+      </form> -->
     </c:when>
     <c:otherwise>
-      <p>No state found</p>
+      <p>No film found</p>
     </c:otherwise>
   </c:choose>
-  <p><a href="index.html">Home</a></p>
+  <!-- <p><a href="home.jsp">Home</a></p> -->
 </body>
 </html>
