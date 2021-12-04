@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Film {
+	
 	private int id;
 	private String title;
 	private String description;
@@ -159,8 +160,7 @@ public class Film {
 	
 	@Override
 	public String toString() {
-		return "\nTitle: " + title + "\nYear: " + releaseYear + "\nDescription: " + description + "\nRating: " + rating + "\nLanguage: " + languageId +"\nActor(s):\n";
-//	+ formatActors()+"\n"  ; 
+		return "\nTitle: " + title + "\nYear: " + releaseYear + "\nDescription: " + description + "\nRating: " + rating + "\nLanguage: " + languageId +"\nActor(s):\n"	+ formatActors()+"\n" ; 
 	}
 
 	private String formatActors() {
