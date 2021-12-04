@@ -38,7 +38,12 @@ import com.skilldistillery.film.entities.Film;
 
 			try {
 				Connection conn = DriverManager.getConnection(URL, USER, PASS);
-				String sql = "SELECT * FROM film JOIN language ON film.language_id = language.id WHERE film.id = ?";
+				String sql = "SELECT * FROM film \n"
+						+ "JOIN language ON film.language_id = language.id \n"
+						+ "JOIN film_category ON film.id = film_category.film_id\n"
+						+ "JOIN category ON film_category.category_id = category.id\n"
+						+ "WHERE film.id = ?";
+				//add join for category section 
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, filmId);
 				ResultSet filmResult = stmt.executeQuery();
@@ -50,7 +55,13 @@ import com.skilldistillery.film.entities.Film;
 					film.setReleaseYear(filmResult.getString("release_year"));
 					film.setDescription(filmResult.getString("description"));
 					film.setRating(filmResult.getString("rating"));
-					film.setLanguageId(filmResult.getString("language.name"));
+//					add length
+					film.setLength(filmResult.getInt("length"));
+//					add special features
+					film.setSpecialFeatures(filmResult.getString("special_features"));
+//					category
+					film.setCategory(filmResult.getString("category.name"));
+					film.setLanguage(filmResult.getString("language.name"));
 					film.setActors(findActorsByFilmId(filmId));
 
 				}
@@ -141,7 +152,7 @@ import com.skilldistillery.film.entities.Film;
 					film.setReleaseYear(filmResult.getString("release_year"));
 					film.setDescription(filmResult.getString("description"));
 					film.setRating(filmResult.getString("rating"));
-					film.setLanguageId(filmResult.getString("language.name"));
+					film.setLanguage(filmResult.getString("language.name"));
 					film.setActors(findActorsByFilmId(film.getId()));
 
 					films.add(film);
@@ -290,8 +301,8 @@ import com.skilldistillery.film.entities.Film;
 			try {
 				conn = DriverManager.getConnection(URL, USER, PASS);
 				conn.setAutoCommit(false); //Start Transaction
-				String sql = "INSERT INTO film (title, description, language_id, release_year) "
-						+ "VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO film (title, description, language_id, release_year, rating) "
+						+ "VALUES (?, ?, ?, ?, ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				
 //				System.out.println(stmt + "*******");
@@ -299,6 +310,9 @@ import com.skilldistillery.film.entities.Film;
 				stmt.setString(1, newFilm.getTitle());
 				
 				stmt.setString(2, newFilm.getDescription());
+				stmt.setString(3, newFilm.getLanguage());
+				stmt.setString(4, newFilm.getReleaseYear());
+				stmt.setString(5, sql);
 				
 //				System.out.println(stmt + "*******");
 				

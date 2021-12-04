@@ -6,7 +6,10 @@
 </head>
 <body>
   <h3>Add a new Film</h3>
-  <form action="NewFilmData.do" method="GET">
+  <form action="NewFilmData.do" method="POST">
+  <label for="category">Category:</label>
+    <input type="text" name="name"/>
+    <br>
   <label for="filmTitle">Title:</label>
     <input type="text" name="name"/>
     <br>
@@ -17,12 +20,9 @@
     <input type="text" name="name"/> 
     <br>
     <label for="languageId">Language ID:</label>
-    <input type="text" name="name"/> 
+    <input type="number" name="name"/> 
     <br>
     <label for="length">Length</label>
-    <input type="text" name="name"/>
-    <br>
-    <label for="replacementCost">Replacement Cost:</label>
     <input type="text" name="name"/>
     <br>
     <label for="rating">Rating:</label>

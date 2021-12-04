@@ -12,18 +12,16 @@
   <c:choose>
     <c:when test="${! empty film}">
       <ul>
-        <li>${film.id}</li>
+        <li>Film Id: ${film.id}</li>
         <li>${film.title}</li>
         <li>${film.description}</li>
         <li>${film.releaseYear}</li>
-        <li>${film.languageId}</li>
-        <li>${film.rentalDuration}</li>
-        <li>${film.rentalRate}</li>
+        <li>${film.language}</li>
         <li>${film.length}</li>
-        <li>${film.replacementCost}</li>
         <li>${film.rating}</li>
         <li>${film.specialFeatures}</li>
         <li>${film.actors}</li>
+        <!-- add catergory -->
       </ul>
      <!--  <form action="NextState.do">
       <button type="submit">Next</button>
@@ -36,6 +34,6 @@
       <p>No film found</p>
     </c:otherwise>
   </c:choose>
-  <!-- <p><a href="home.jsp">Home</a></p> -->
+  <p><a href="index.html">Home</a></p> 
 </body>
 </html>
