@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.film.entities.Actor;
@@ -382,7 +384,10 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 			String sql = "DELETE FROM film WHERE id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, film.getId());
-			stmt.executeUpdate();
+			int deleted = stmt.executeUpdate();
+			if(deleted == 0) {
+				JOptionPane.showMessageDialog(null, "Nothing to delete,");
+			}
 			conn.commit();
 			conn.close();
 
