@@ -166,7 +166,9 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 	public List<Film> findFilmsByKeyword(String theWordToSearchFor) {
 		List<Film> films = new ArrayList<>();
 		Film film = null;
-		String sql = "SELECT * FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+		String sql = "SELECT * FROM film "
+				+ "JOIN language ON film.language_id = language.id "
+				+ "WHERE title LIKE ? OR description LIKE ?";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
@@ -382,6 +384,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 			stmt.setInt(1, film.getId());
 			stmt.executeUpdate();
 			conn.commit();
+			conn.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
