@@ -45,5 +45,12 @@
 	<p>
 		<a href="index.html">Home</a>
 	</p>
+		<br>
+	<h3>Remove Film by ID</h3>
+	<form>
+	Film Id:
+		<input type="number" name="filmId" /> 
+		<input type="submit" value="Remove Film Data" />
+	</form>
 </body>
 </html>

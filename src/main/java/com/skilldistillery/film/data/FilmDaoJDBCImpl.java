@@ -38,7 +38,7 @@ import com.skilldistillery.film.entities.Film;
 
 			try {
 				Connection conn = DriverManager.getConnection(URL, USER, PASS);
-				String sql = " SELECT title, release_year, rating, description, language.name, film.id FROM film "
+				String sql = " SELECT title, release_year, rating, description, special_features, length, language.name, film.id FROM film "
 						+ "JOIN language ON film.language_id = language.id " + "WHERE film.id = ?";
 				//add join for category section 
 				PreparedStatement stmt = conn.prepareStatement(sql);
@@ -57,7 +57,7 @@ import com.skilldistillery.film.entities.Film;
 //					add special features
 					film.setSpecialFeatures(filmResult.getString("film.special_features"));
 //					category
-					film.setCategory(filmResult.getString("category.name"));
+//					film.setCategory(filmResult.getString("category.name"));
 					film.setLanguage(filmResult.getString("language.name"));
 					film.setActors(findActorsByFilmId(filmId));
 
