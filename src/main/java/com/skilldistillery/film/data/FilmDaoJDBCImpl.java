@@ -42,8 +42,8 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			String sql = "SELECT film.*, language.name, film.id, category.name FROM film "
-					+ "LEFT JOIN language ON film.language_id = language.id "//WHERE film.id = ?";
-					+ " LEFT JOIN film_category ON film.id = film_category.film_id " //WHERE film.id = ?";
+					+ "LEFT JOIN language ON film.language_id = language.id "// WHERE film.id = ?";
+					+ " LEFT JOIN film_category ON film.id = film_category.film_id " // WHERE film.id = ?";
 					+ "LEFT JOIN category ON film_category.category_id = category.id WHERE film.id = ?";
 			// add join for category section
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -111,8 +111,8 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 //			Actor actor = null;
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			String sql = "SELECT category.id, category.name FROM category JOIN film_category ON film_category.category_id = category.id "
-					+"WHERE film_category.film_id= ?";
+			String sql = "SELECT category.name FROM category JOIN film_category ON film_category.category_id = category.id "
+					+ "WHERE film_category.film_id= ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 			ResultSet categoryResult = stmt.executeQuery();
@@ -120,7 +120,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 //					 // Create the object
 				category = new Category();
 				// Here is our mapping of query columns to our object fields:
-				category.setId(categoryResult.getInt("category.id"));
+//				category.setId(categoryResult.getInt("category.id"));
 				category.setName(categoryResult.getString("category.name"));
 //					
 
@@ -168,8 +168,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 	public List<Film> findFilmsByKeyword(String theWordToSearchFor) {
 		List<Film> films = new ArrayList<>();
 		Film film = null;
-		String sql = "SELECT * FROM film "
-				+ "JOIN language ON film.language_id = language.id "
+		String sql = "SELECT * FROM film " + "JOIN language ON film.language_id = language.id "
 				+ "WHERE title LIKE ? OR description LIKE ?";
 
 		try {
@@ -188,6 +187,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 				film.setRating(filmResult.getString("rating"));
 				film.setLanguage(filmResult.getString("language.name"));
 				film.setActors(findActorsByFilmId(film.getId()));
+				film.setCategory(findCategoryById(film.getId()));
 
 				films.add(film);
 
@@ -385,7 +385,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, film.getId());
 			int deleted = stmt.executeUpdate();
-			if(deleted == 0) {
+			if (deleted == 0) {
 				JOptionPane.showMessageDialog(null, "Nothing to delete,");
 			}
 			conn.commit();
@@ -406,9 +406,22 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false);
-			String sql = "UPDATE film SET description = ? " + "WHERE id = ?";
+			String sql = "UPDATE film LEFT JOIN language ON film.language_id = language.id"
+					+ "            LEFT JOIN film_category ON film.id = film_category.film_id"
+//					+ "            LEFT JOIN category ON film_category.category_id = category.id"
+					+ "            SET film.title = ?, film.description = ?, film.release_year = ?,"
+					+ "            film.rating = ?, film.language_id = ?, film.length = ?" //category.name = ?"
+					+ "            WHERE film.id = ?;";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, film.getDescription());
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setString(3, film.getReleaseYear());
+			stmt.setString(4, film.getRating());
+			stmt.setInt(5, film.getLanguageId());
+			stmt.setInt(6, film.getLength());
+//			stmt.setString(7, film.getCategory());
+			
+
 			stmt.setInt(2, filmId);
 			int updateCount = stmt.executeUpdate();
 			conn.commit();

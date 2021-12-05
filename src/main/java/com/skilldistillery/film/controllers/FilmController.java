@@ -89,4 +89,22 @@ public class FilmController {
 //		return mv;
 	}
 
+	@RequestMapping(path = "UpdateFilmData.do", method = RequestMethod.POST)
+	public ModelAndView updateNewFilm(String title, String description, Integer languageId, String rating,
+			String releaseYear, int length, int filmId) {
+		ModelAndView mv = new ModelAndView();
+		Film film = new Film();
+		film.setTitle(title);
+		film.setDescription(description);
+		film.setRating(rating);
+		film.setLanguageId(languageId);
+		film.setReleaseYear(releaseYear);
+		film.setLength(length);
+		film = filmDao.updateDescriptionOfSpecificFilm(film, filmId);
+		mv.addObject("film", film);
+		mv.setViewName("result");
+		
+		return mv;
+		
+	}
 }
