@@ -10,7 +10,7 @@
 </head>
 <body>
 	<c:choose>
-	<c:when test="${! empty films }">
+	<%-- <c:when test="${! empty films }">
 	<c:forEach var="actor" items="${films }">
 	<ul>
 				<li>Film Id: ${films.id}</li>
@@ -22,8 +22,9 @@
 				<li>${films.length}</li>
 				<li>${films.rating}</li>
 				<li>${films.specialFeatures}</li>
+				</ul>
 	</c:forEach>
-		</c:when>
+		</c:when> --%>
 		<c:when test="${! empty film}">
 		
 			<ul>
@@ -67,7 +68,8 @@
 	<br>
 	<h3>Remove Film by ID</h3>
 	<form action="RemoveFilmData.do" method="POST">
-		Film Id: <input type="number" name="filmId" /> <input type="submit"
+		Film Id: <input type="number" name="filmId" />
+		 <input type="submit"
 			value="Remove Film Data" />
 	</form>
 </body>

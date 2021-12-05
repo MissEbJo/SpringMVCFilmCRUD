@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.film.entities.Actor;
+import com.skilldistillery.film.entities.Category;
 import com.skilldistillery.film.entities.Film;
 
 	@Repository
@@ -38,8 +39,7 @@ import com.skilldistillery.film.entities.Film;
 
 			try {
 				Connection conn = DriverManager.getConnection(URL, USER, PASS);
-				String sql = " SELECT title, release_year, rating, description, special_features, length, language.name, film.id FROM film "
-						+ "JOIN language ON film.language_id = language.id " + "WHERE film.id = ?";
+				String sql = " SELECT title, release_year, rating, description, special_features, length, language.name, film.id, category.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id WHERE film.id = ?";
 				//add join for category section 
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, filmId);
@@ -57,7 +57,7 @@ import com.skilldistillery.film.entities.Film;
 //					add special features
 					film.setSpecialFeatures(filmResult.getString("film.special_features"));
 //					category
-//					film.setCategory(filmResult.getString("category.name"));
+					film.setCategory(findCategoryById(filmId));
 					film.setLanguage(filmResult.getString("language.name"));
 					film.setActors(findActorsByFilmId(filmId));
 
@@ -99,6 +99,34 @@ import com.skilldistillery.film.entities.Film;
 			}
 
 			return null;
+		}
+		public Category findCategoryById(int filmId) {
+			Category category = null;
+//			Actor actor = null;
+			try {
+				Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				String sql = "SELECT id, name FROM category JOIN film_category ON film_category.film_id = category.id JOIN film WHERE id = ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, filmId);
+				ResultSet categoryResult = stmt.executeQuery();
+				if (categoryResult.next()) {
+//					 // Create the object
+					category = new Category();
+					// Here is our mapping of query columns to our object fields:
+					category.setId(categoryResult.getInt("category.id"));
+					category.setName(categoryResult.getString("category.name"));
+//					
+					
+				}
+				categoryResult.close();
+				stmt.close();
+				conn.close();
+				return category;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return category;
 		}
 
 		@Override

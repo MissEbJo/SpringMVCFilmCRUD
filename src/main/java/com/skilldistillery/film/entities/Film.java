@@ -19,7 +19,7 @@ public class Film {
 	private String rating;
 	private String specialFeatures;
 	private List<Actor> actors;
-	private String category;
+	private Category category;
 	
 
 	
@@ -141,11 +141,11 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 	}
 	
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 	
