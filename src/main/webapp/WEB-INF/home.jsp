@@ -9,8 +9,9 @@
 <body>
 <h1>FilmIt!</h1>
 
-<a href="filmForm.html">Get Film by ID</a><br/>
+<a href="filmForm.html">Find Film by ID</a><br/>
+<a href="filmForm.html"> Find Film by Keyword</a>
 <a href="newFilmForm.html">Add a new Film</a><br/>
-${TEST}
+<%-- ${TEST} --%>
 </body>
 </html>

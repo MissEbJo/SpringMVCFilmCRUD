@@ -1,5 +1,7 @@
 package com.skilldistillery.film.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +22,21 @@ public class FilmController {
 		this.filmDao = filmDao;
 	}
 	
-	@RequestMapping({"/", "home.do"})
-	public String home(Model model) {
-		model.addAttribute("TEST", "Hello, Spring MVC!");
-		return "home";
-	}
+//	@RequestMapping({"/", "home.do"})
+//	public String home(Model model) {
+//		model.addAttribute("TEST", "Hello, Spring MVC!");
+//		return "home";
+//	}
 
+	@RequestMapping(path="GetKeywordFilmData.do", params="filmKeyword", method =RequestMethod.GET)
+	public ModelAndView getFilmByKeyword(String filmKeyword) {
+		ModelAndView mv = new ModelAndView();
+		List<Film> film =filmDao.findFilmsByKeyword(filmKeyword);
+		mv.addObject("films", film);
+		mv.setViewName("result");
+		return mv;
+		
+	}
 	@RequestMapping(path="GetFilmData.do", params="filmId", method =RequestMethod.GET)
 	public ModelAndView getFilmById(int filmId) {
 		ModelAndView mv = new ModelAndView();
@@ -60,8 +71,7 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		filmDao.deleteFilm(film);
-		//this is not functioning properly not sure why
-//		mv.addObject("film", film);
+		mv.addObject("message", "Film deleted: " + film.getTitle());
 		mv.setViewName("result");
 		return mv;
 	}

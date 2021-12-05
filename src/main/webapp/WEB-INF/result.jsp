@@ -10,7 +10,22 @@
 </head>
 <body>
 	<c:choose>
+	<c:when test="${! empty films }">
+	<c:forEach var="actor" items="${films }">
+	<ul>
+				<li>Film Id: ${films.id}</li>
+				<li>${films.category}</li>
+				<li>${films.title}</li>
+				<li>${films.description}</li>
+				<li>${films.releaseYear}</li>
+				<li>${films.language}</li>
+				<li>${films.length}</li>
+				<li>${films.rating}</li>
+				<li>${films.specialFeatures}</li>
+	</c:forEach>
+		</c:when>
 		<c:when test="${! empty film}">
+		
 			<ul>
 				<li>Film Id: ${film.id}</li>
 				<li>${film.category}</li>
@@ -20,14 +35,14 @@
 				<li>${film.language}</li>
 				<li>${film.length}</li>
 				<li>${film.rating}</li>
-				<li>${film.specialFeatures}</li> 
+				<li>${film.specialFeatures}</li>
 				<c:if test="${film.actors.size() != 0}">
 					<div>
 						<h2>Starring:</h2>
 						<h4>
 							<c:forEach var="actor" items="${film.actors}">
 								<ul>
-									<li>${actor.firstName}${actor.lastName}</li>
+									<li>${actor.firstName} ${actor.lastName}</li>
 								</ul>
 							</c:forEach>
 						</h4>
@@ -37,6 +52,10 @@
 				<!-- add catergory -->
 			</ul>
 
+	
+		</c:when>
+		<c:when test="${! empty message}">
+			<p>${message }</p>
 		</c:when>
 		<c:otherwise>
 			<p>No film found</p>
@@ -45,12 +64,11 @@
 	<p>
 		<a href="index.html">Home</a>
 	</p>
-		<br>
+	<br>
 	<h3>Remove Film by ID</h3>
-	<form>
-	Film Id:
-		<input type="number" name="filmId" /> 
-		<input type="submit" value="Remove Film Data" />
+	<form action="RemoveFilmData.do" method="POST">
+		Film Id: <input type="number" name="filmId" /> <input type="submit"
+			value="Remove Film Data" />
 	</form>
 </body>
 </html>
