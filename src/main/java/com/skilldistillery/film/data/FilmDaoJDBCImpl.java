@@ -38,7 +38,7 @@ import com.skilldistillery.film.entities.Film;
 
 			try {
 				Connection conn = DriverManager.getConnection(URL, USER, PASS);
-				String sql = "SELECT * FROM film \n"
+				String sql = "SELECT film.*,language.name, category.name FROM film \n"
 						+ "JOIN language ON film.language_id = language.id \n"
 						+ "JOIN film_category ON film.id = film_category.film_id\n"
 						+ "JOIN category ON film_category.category_id = category.id\n"
@@ -50,15 +50,15 @@ import com.skilldistillery.film.entities.Film;
 
 				if (filmResult.next()) {
 					film = new Film();
-					film.setId(filmResult.getInt("id"));
+					film.setId(filmResult.getInt("film.id"));
 					film.setTitle(filmResult.getString("film.title"));
-					film.setReleaseYear(filmResult.getString("release_year"));
-					film.setDescription(filmResult.getString("description"));
-					film.setRating(filmResult.getString("rating"));
+					film.setReleaseYear(filmResult.getString("film.release_year"));
+					film.setDescription(filmResult.getString("film.description"));
+					film.setRating(filmResult.getString("film.rating"));
 //					add length
-					film.setLength(filmResult.getInt("length"));
+					film.setLength(filmResult.getInt("film.length"));
 //					add special features
-					film.setSpecialFeatures(filmResult.getString("special_features"));
+					film.setSpecialFeatures(filmResult.getString("film.special_features"));
 //					category
 					film.setCategory(filmResult.getString("category.name"));
 					film.setLanguage(filmResult.getString("language.name"));
@@ -308,7 +308,6 @@ import com.skilldistillery.film.entities.Film;
 //				System.out.println(stmt + "*******");
 				
 				stmt.setString(1, newFilm.getTitle());
-				
 				stmt.setString(2, newFilm.getDescription());
 				stmt.setInt(3, newFilm.getLanguageId());
 				stmt.setString(4, newFilm.getReleaseYear());

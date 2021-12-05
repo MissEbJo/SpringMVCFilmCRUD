@@ -46,7 +46,7 @@ public class FilmController {
 		film.setRating(rating);
 		film.setLanguageId(languageId);
 		film.setReleaseYear(releaseYear);
-		System.out.println(film);
+//		System.out.println(film);
 		filmDao.createFilm(film);
 		mv.addObject("film", film);
 		mv.setViewName("result");
