@@ -60,7 +60,8 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		filmDao.deleteFilm(film);
-		mv.addObject("film", film);
+		//this is not functioning properly not sure why
+//		mv.addObject("film", film);
 		mv.setViewName("result");
 		return mv;
 	}
