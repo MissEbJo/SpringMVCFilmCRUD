@@ -71,7 +71,7 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		filmDao.deleteFilm(film);
-		mv.addObject("message", "Film deleted: " + film.getTitle());
+//		mv.addObject("message", "Film deleted: " + film.getTitle());
 		mv.setViewName("result");
 		return mv;
 	}
