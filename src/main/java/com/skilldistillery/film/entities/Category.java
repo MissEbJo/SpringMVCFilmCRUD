@@ -6,17 +6,17 @@ import java.util.Objects;
 public class Category {
 	private int id;
 	private String name; 
-	private List<Film> films;
+//	private List<Film> films;
 	
 	public Category() {
 	}
 	
 
-	public Category(int id, String name, List<Film> films) {
+	public Category(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.films = films;
+		
 	}
 
 
@@ -37,18 +37,18 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<Film> getFilms() {
-		return films;
-	}
-
-	public void setFilms(List<Film> films) {
-		this.films = films;
-	}
+//	public List<Film> getFilms() {
+//		return films;
+//	}
+//
+//	public void setFilms(List<Film> films) {
+//		this.films = films;
+//	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(films, id, name);
+		return Objects.hash(id, name);
 	}
 
 
@@ -61,7 +61,7 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return Objects.equals(films, other.films) && id == other.id && Objects.equals(name, other.name);
+		return id == other.id && Objects.equals(name, other.name);
 	}
 
 
