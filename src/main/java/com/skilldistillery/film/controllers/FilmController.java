@@ -89,9 +89,9 @@ public class FilmController {
 //		return mv;
 	}
 
-	@RequestMapping(path = "UpdateFilmData.do", method = RequestMethod.POST)
+	@RequestMapping(path = "UpdateForm.do", method = RequestMethod.POST)
 	public ModelAndView updateNewFilm(String title, String description, Integer languageId, String rating,
-			String releaseYear, int length, int filmId) {
+			String releaseYear, Integer length, int filmId) {
 		ModelAndView mv = new ModelAndView();
 		Film film = new Film();
 		film.setTitle(title);
@@ -106,5 +106,14 @@ public class FilmController {
 		
 		return mv;
 		
+	}
+	@RequestMapping(path="updateForm.html", method= RequestMethod.POST)
+	public ModelAndView updateForm(int filmId) {
+		ModelAndView mv = new ModelAndView();
+		Film film = filmDao.findFilmById(filmId);
+		
+		mv.addObject("film", film);
+		mv.setViewName("updateForm");
+		return mv;
 	}
 }
