@@ -58,7 +58,6 @@ public class FilmController {
 		film.setLanguageId(languageId);
 		film.setReleaseYear(releaseYear);
 		film.setLength(length);
-//		System.out.println(film);
 		filmDao.createFilm(film);
 		mv.addObject("film", film);
 		mv.setViewName("result");
@@ -71,8 +70,15 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		filmDao.deleteFilm(film);
-//		mv.addObject("message", "Film deleted: " + film.getTitle());
-		mv.setViewName("result");
+		if(filmDao.findFilmById(film.getId()) == null) {
+			mv.addObject("message", "Film deleted: " + film.getTitle());
+			mv.setViewName("redirect");
+			return mv;
+		}
+		else {
+			mv.setViewName("noFilm");
+		}
+		mv.setViewName("redirect");
 		return mv;
 	}
 	
