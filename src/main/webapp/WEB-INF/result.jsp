@@ -69,8 +69,7 @@
 	<h3>Remove Film by ID</h3>
 	<form action="RemoveFilmData.do" method="POST">
 		Film Id: <input type="number" name="filmId" />
-		 <input type="submit"
-			value="Remove Film Data" />
+		 <input type="submit" value="Remove Film Data" />
 	</form>
 </body>
 </html>
