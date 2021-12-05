@@ -38,11 +38,8 @@ import com.skilldistillery.film.entities.Film;
 
 			try {
 				Connection conn = DriverManager.getConnection(URL, USER, PASS);
-				String sql = "SELECT film.*,language.name, category.name FROM film \n"
-						+ "JOIN language ON film.language_id = language.id \n"
-						+ "JOIN film_category ON film.id = film_category.film_id\n"
-						+ "JOIN category ON film_category.category_id = category.id\n"
-						+ "WHERE film.id = ?";
+				String sql = " SELECT title, release_year, rating, description, language.name, film.id FROM film "
+						+ "JOIN language ON film.language_id = language.id " + "WHERE film.id = ?";
 				//add join for category section 
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, filmId);
