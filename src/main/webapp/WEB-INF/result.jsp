@@ -84,7 +84,7 @@
 		 <input type="submit" value="Remove Film Data" />
 	</form>
 	<h3>Update Film by ID</h3>
-	<form action="updateForm.html" method="POST">
+	<form action="UpdateFilmDataForm.do" >
 	
 		Film Id: <input type="number" name="filmId" />
 		 <input type="submit" value="Update Film Data" />

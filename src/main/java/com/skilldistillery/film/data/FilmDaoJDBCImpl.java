@@ -54,7 +54,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 				film = new Film();
 				film.setId(filmResult.getInt("film.id"));
 				film.setTitle(filmResult.getString("film.title"));
-				film.setReleaseYear(filmResult.getString("film.release_year"));
+				film.setReleaseYear(filmResult.getInt("film.release_year"));
 				film.setDescription(filmResult.getString("film.description"));
 				film.setRating(filmResult.getString("film.rating"));
 //					add length
@@ -62,6 +62,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 //					add special features
 				film.setSpecialFeatures(filmResult.getString("film.special_features"));
 //					category
+				film.setLanguageId(filmResult.getInt("film.language_id"));
 				film.setLanguage(filmResult.getString("language.name"));
 				film.setActors(findActorsByFilmId(filmId));
 				film.setCategory(findCategoryById(filmId));
@@ -182,7 +183,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 				film = new Film();
 				film.setId(filmResult.getInt("film.id"));
 				film.setTitle(filmResult.getString("film.title"));
-				film.setReleaseYear(filmResult.getString("release_year"));
+				film.setReleaseYear(filmResult.getInt("release_year"));
 				film.setDescription(filmResult.getString("description"));
 				film.setRating(filmResult.getString("rating"));
 				film.setLanguage(filmResult.getString("language.name"));
@@ -344,7 +345,7 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 			stmt.setString(1, newFilm.getTitle());
 			stmt.setString(2, newFilm.getDescription());
 			stmt.setInt(3, newFilm.getLanguageId());
-			stmt.setString(4, newFilm.getReleaseYear());
+			stmt.setInt(4, newFilm.getReleaseYear());
 			stmt.setString(5, newFilm.getRating());
 
 //				System.out.println(stmt + "*******");
@@ -374,11 +375,10 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 	}
 
 	@Override
-	public boolean deleteFilm(Film film) {
+	public boolean deleteFilm(Film film) throws SQLException{
 		Connection conn = null;
 //			System.out.println(film.getId());
 //			System.out.println("***********************");
-		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false);
 			String sql = "DELETE FROM film WHERE id = ?";
@@ -391,38 +391,31 @@ public class FilmDaoJDBCImpl implements FilmDAO {
 			conn.commit();
 			conn.close();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-			return false;
-		}
 		return true;
 	}
 
 	@Override
-	public Film updateDescriptionOfSpecificFilm(Film film, int filmId) {
+	public Film updateSpecificFilm(Film film) {
 		Connection conn = null;
 
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false);
-			String sql = "UPDATE film LEFT JOIN language ON film.language_id = language.id"
-					+ "            LEFT JOIN film_category ON film.id = film_category.film_id"
-//					+ "            LEFT JOIN category ON film_category.category_id = category.id"
+			String sql = "UPDATE film  "
+//					+ "            LEFT JOIN film_category fc ON fc.film_id = film.id"
 					+ "            SET film.title = ?, film.description = ?, film.release_year = ?,"
-					+ "            film.rating = ?, film.language_id = ?, film.length = ?" //category.name = ?"
+					+ "            film.rating = ?, film.language_id = ?, film.length = ?" //fc.category_id = ?"
 					+ "            WHERE film.id = ?;";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
-			stmt.setString(3, film.getReleaseYear());
+			stmt.setInt(3, film.getReleaseYear());
 			stmt.setString(4, film.getRating());
 			stmt.setInt(5, film.getLanguageId());
 			stmt.setInt(6, film.getLength());
-//			stmt.setString(7, film.getCategory());
+//			stmt.setInt(7, film.getCategory().getId());
+			stmt.setInt(7,film.getId());
 			
-
-			stmt.setInt(2, filmId);
 			int updateCount = stmt.executeUpdate();
 			conn.commit();
 

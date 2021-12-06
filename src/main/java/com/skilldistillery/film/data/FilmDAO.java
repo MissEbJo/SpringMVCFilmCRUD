@@ -1,5 +1,6 @@
 package com.skilldistillery.film.data;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.skilldistillery.film.entities.Actor;
@@ -17,10 +18,10 @@ public interface FilmDAO {
 	  
 	  public Film createFilm(Film newFilm);
 	  
-	  public boolean deleteFilm(Film film);
+	  public boolean deleteFilm(Film film) throws SQLException;
 	  
 	//  public boolean updateFilm(Film film);
 
-	public  Film updateDescriptionOfSpecificFilm(Film film, int filmId);
+	public  Film updateSpecificFilm(Film film);
 	public Category findCategoryById(int filmId);
 }

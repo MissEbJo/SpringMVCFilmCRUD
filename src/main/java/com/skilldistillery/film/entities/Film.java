@@ -9,7 +9,7 @@ public class Film {
 	private int id;
 	private String title;
 	private String description;
-	private String releaseYear;
+	private int releaseYear;
 	private String language;
 	private int languageId;
 	private int rentalDuration;
@@ -23,26 +23,26 @@ public class Film {
 	
 
 	
-
-	public Film() {
-
-	}
-
-	public Film(int id, String title, String description, String releaseYear, String language, int rentalDuration,
-			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.releaseYear = releaseYear;
-		this.language = language;
-		this.rentalDuration = rentalDuration;
-		this.rentalRate = rentalRate;
-		this.length = length;
-		this.replacementCost = replacementCost;
-		this.rating = rating;
-		this.specialFeatures = specialFeatures;
-	}
+//
+//	public Film() {
+//
+//	}
+//
+//	public Film(int id, String title, String description, String releaseYear, String language, int rentalDuration,
+//			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
+//		super();
+//		this.id = id;
+//		this.title = title;
+//		this.description = description;
+//		this.releaseYear = releaseYear;
+//		this.language = language;
+//		this.rentalDuration = rentalDuration;
+//		this.rentalRate = rentalRate;
+//		this.length = length;
+//		this.replacementCost = replacementCost;
+//		this.rating = rating;
+//		this.specialFeatures = specialFeatures;
+//	}
 
 	
 	public int getLanguageId() {
@@ -77,11 +77,11 @@ public class Film {
 		this.description = description;
 	}
 
-	public String getReleaseYear() {
+	public int getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(String releaseYear) {
+	public void setReleaseYear(int releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 

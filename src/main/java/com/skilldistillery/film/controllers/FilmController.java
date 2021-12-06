@@ -1,5 +1,6 @@
 package com.skilldistillery.film.controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class FilmController {
 
 	@RequestMapping(path = "NewFilmData.do", method = RequestMethod.POST)
 	public ModelAndView createNewFilm(String title, String description, Integer languageId, String rating,
-			String releaseYear, int length) {
+			Integer releaseYear, int length) {
 		ModelAndView mv = new ModelAndView();
 		Film film = new Film();
 		film.setTitle(title);
@@ -73,47 +74,37 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		if (film != null) {
-			filmDao.deleteFilm(film);
-//		if(filmDao.findFilmById(film.getId()) == null) 
-//		{
-			mv.addObject("message", "Film deleted: " + film.getTitle());
+			try {
+				filmDao.deleteFilm(film);
+				mv.addObject("message", "Film deleted: " + film.getTitle());
+			} catch (SQLException e) {
+				mv.addObject("message", "Cannot delete or update a parent row");
+			}
 			mv.setViewName("redirect");
 			return mv;
-		}
-		else {
-
+		} 
 			mv.setViewName("noFilm");
 			return mv;
-		}
-//		mv.setViewName("redirect");
-//		return mv;
 	}
 
-	@RequestMapping(path = "UpdateForm.do", method = RequestMethod.POST)
-	public ModelAndView updateNewFilm(String title, String description, Integer languageId, String rating,
-			String releaseYear, Integer length, int filmId) {
+	@RequestMapping(path = "UpdateFilmData.do", method = RequestMethod.POST)
+	public ModelAndView updateNewFilm(Film film) {
 		ModelAndView mv = new ModelAndView();
-		Film film = new Film();
-		film.setTitle(title);
-		film.setDescription(description);
-		film.setRating(rating);
-		film.setLanguageId(languageId);
-		film.setReleaseYear(releaseYear);
-		film.setLength(length);
-		film = filmDao.updateDescriptionOfSpecificFilm(film, filmId);
+		film = filmDao.updateSpecificFilm(film);
 		mv.addObject("film", film);
-		mv.setViewName("result");
-		
+		mv.setViewName("redirect:GetFilmData.do?filmId=" + film.getId());
+
 		return mv;
-		
+
 	}
-	@RequestMapping(path="updateForm.html", method= RequestMethod.POST)
+
+	@RequestMapping(path = "UpdateFilmDataForm.do", method = RequestMethod.GET)
 	public ModelAndView updateForm(int filmId) {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
-		
+
 		mv.addObject("film", film);
-		mv.setViewName("updateForm");
+		mv.setViewName("update");
 		return mv;
 	}
 }
