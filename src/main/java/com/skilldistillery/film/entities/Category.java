@@ -6,7 +6,6 @@ import java.util.Objects;
 public class Category {
 	private int id;
 	private String name; 
-//	private List<Film> films;
 	
 	public Category() {
 	}
@@ -37,13 +36,6 @@ public class Category {
 		this.name = name;
 	}
 
-//	public List<Film> getFilms() {
-//		return films;
-//	}
-//
-//	public void setFilms(List<Film> films) {
-//		this.films = films;
-//	}
 
 
 	@Override

@@ -2,9 +2,15 @@ package com.skilldistillery.film;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MvcFilmSiteApplication {
+public class MvcFilmSiteApplication extends SpringBootServletInitializer {
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(MvcFilmSiteApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(MvcFilmSiteApplication.class, args);
